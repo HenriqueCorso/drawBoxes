@@ -1,6 +1,7 @@
 const main = () => {
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
+  const colorPicker = document.getElementById('colorPicker');
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -29,8 +30,14 @@ const main = () => {
   const drawBox = (startX, startY, endX, endY) => {
     const width = endX - startX;
     const height = endY - startY;
+
+    const selectedColor = colorPicker.value;
+
     context.strokeStyle = 'black';
     context.lineWidth = 2;
+
+    context.fillStyle = selectedColor;
+
     context.beginPath();
     context.rect(startX, startY, width, height);
     context.fill();
