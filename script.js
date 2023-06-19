@@ -69,6 +69,7 @@ const main = () => {
       context.moveTo(lastX, lastY);
       context.lineTo(currentX, currentY);
       context.stroke();
+      context.lineCap = "round";
     }
 
     lastX = currentX;
