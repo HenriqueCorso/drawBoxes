@@ -67,6 +67,11 @@ const main = () => {
     isDrawing = true;
     startX = event.offsetX;
     startY = event.offsetY;
+
+    if (selectedTool === 'pencil') {
+      lastX = event.offsetX;
+      lastY = event.offsetY;
+    }
   });
 
   canvas.addEventListener('mousemove', (event) => {
@@ -74,12 +79,19 @@ const main = () => {
     const currentX = event.offsetX;
     const currentY = event.offsetY;
 
-    drawBox(startX, startY, currentX, currentY);
-    drawPencil(currentX, currentY);
+    if (selectedTool === 'box') {
+      drawBox(startX, startY, currentX, currentY);
+    } else if (selectedTool === 'eraser') {
+      drawBox(startX, startY, currentX, currentY);
+    } else if (selectedTool === 'pencil') {
+      drawPencil(currentX, currentY);
+    }
   });
 
   canvas.addEventListener('mouseup', () => {
     isDrawing = false;
+
+
   });
 
   fileInput.addEventListener('change', () => {
