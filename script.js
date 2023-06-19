@@ -6,6 +6,9 @@ const main = () => {
   const pencilButton = document.getElementById('pencilButton');
   const eraserButton = document.getElementById('eraserButton');
   const boxButton = document.getElementById('boxButton');
+  const pencilWidthInput = document.getElementById('pencilWidthInput');
+  const buttons = document.querySelectorAll('button');
+
 
   let isDrawing = false;
   let startX, startY;
@@ -25,6 +28,15 @@ const main = () => {
 
   const setTool = (tool) => {
     selectedTool = tool;
+
+
+    buttons.forEach(button => {
+      if (button.id === tool + 'Button') {
+        button.classList.add('selected');
+      } else {
+        button.classList.remove('selected');
+      }
+    });
   };
 
   const drawBox = (startX, startY, endX, endY) => {
@@ -50,7 +62,7 @@ const main = () => {
     const selectedColor = colorPicker.value;
 
     context.strokeStyle = selectedColor;
-    context.lineWidth = 2;
+    context.lineWidth = pencilWidthInput.value;
 
     if (selectedTool === 'pencil') {
       context.beginPath();
@@ -120,6 +132,10 @@ const main = () => {
 
   boxButton.addEventListener('click', () => {
     setTool('box');
+  });
+
+  pencilWidthInput.addEventListener('input', () => {
+    context.lineWidth = pencilWidthInput.value;
   });
 
   setCanvasDimensions();
