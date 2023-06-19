@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" href="styles.css">
   <title>Box Drawing Tool</title>
-  <style>
-  </style>
+  
 </head>
 <body>
 
   <input type="file" id="fileInput"/>
   <input type="color" id="colorPicker">
-  <button id="pencilButton">Pencil</button>
-  <button id="eraserButton">Eraser</button>
-  <button id="boxButton">Draw Box</button>
+  <input type="number" id="pencilWidthInput" min="1" max="20" value="2">
+
+  <button id="pencilButton" class="tool-button">Pencil</button>
+  <button id="eraserButton" class="tool-button">Eraser</button>
+  <button id="boxButton" class="tool-button">Draw Box</button>
+  
   <canvas id="canvas"></canvas>
   
   <script src="script.js"></script>
