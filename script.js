@@ -10,6 +10,7 @@ const main = () => {
   let isDrawing = false;
   let startX, startY;
   let selectedTool = 'box';
+  let lastX, lastY;
 
   const setCanvasDimensions = () => {
     canvas.width = window.innerWidth;
@@ -26,7 +27,7 @@ const main = () => {
     selectedTool = tool;
   };
 
-  const draw = (startX, startY, endX, endY) => {
+  const drawBox = (startX, startY, endX, endY) => {
     const width = endX - startX;
     const height = endY - startY;
     const selectedColor = colorPicker.value;
@@ -35,18 +36,31 @@ const main = () => {
     context.lineWidth = 1;
     context.fillStyle = selectedColor;
 
-    if (selectedTool === 'pencil') {
-      context.beginPath();
-      context.moveTo(startX, startY);
-      context.lineTo(endX, endY);
-      context.stroke();
-    } else if (selectedTool === 'eraser') {
+
+    if (selectedTool === 'eraser') {
       context.clearRect(startX, startY, width, height);
     } else if (selectedTool === 'box') {
       context.beginPath();
       context.rect(startX, startY, width, height);
       context.fill();
     }
+  };
+
+  const drawPencil = (currentX, currentY) => {
+    const selectedColor = colorPicker.value;
+
+    context.strokeStyle = selectedColor;
+    context.lineWidth = 2;
+
+    if (selectedTool === 'pencil') {
+      context.beginPath();
+      context.moveTo(lastX, lastY);
+      context.lineTo(currentX, currentY);
+      context.stroke();
+    }
+
+    lastX = currentX;
+    lastY = currentY;
   };
 
   canvas.addEventListener('mousedown', (event) => {
@@ -60,7 +74,8 @@ const main = () => {
     const currentX = event.offsetX;
     const currentY = event.offsetY;
 
-    draw(startX, startY, currentX, currentY);
+    drawBox(startX, startY, currentX, currentY);
+    drawPencil(currentX, currentY);
   });
 
   canvas.addEventListener('mouseup', () => {
